@@ -23,15 +23,18 @@ tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
 
+// This is the important part - fixed for Kotlin DSL
 buildscript {
-    ext.kotlin_version = "1.9.0"
+    // In Kotlin DSL, use extra properties instead of ext
+    extra["kotlin_version"] = "1.9.0"
+    
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        // Updated to a more recent version that works with compileSdk 34
         classpath("com.android.tools.build:gradle:8.1.4")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        // Access the extra property properly
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${extra["kotlin_version"]}")
     }
 }
